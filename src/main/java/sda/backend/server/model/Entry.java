@@ -11,8 +11,14 @@ public class Entry {
     @Column(name = "entry_id")
     private Long entryId;
 
-    @Column(name = "content")
-    private String contents;
+    @Column
+    private String content;
+
+    @Column
+    private String link;
+
+    @Column(name = "image_path")
+    private String imagePath;
 
     @Column(name = "created_data")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
