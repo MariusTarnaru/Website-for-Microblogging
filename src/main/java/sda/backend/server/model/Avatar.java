@@ -1,12 +1,13 @@
 package sda.backend.server.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Builder
+@Data
 @Table(name = "avatar")
 public class Avatar {
 

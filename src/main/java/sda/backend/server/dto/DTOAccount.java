@@ -2,6 +2,7 @@ package sda.backend.server.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import sda.backend.server.model.AccountStatus;
 import sda.backend.server.model.AccountType;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
+@NoArgsConstructor
 public class DTOAccount {
 
     private Long accountId;
