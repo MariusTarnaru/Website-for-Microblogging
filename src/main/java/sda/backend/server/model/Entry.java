@@ -4,10 +4,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "entry")
 public class Entry {
     @Id
@@ -40,5 +42,7 @@ public class Entry {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @ManyToMany
+    private List<Tag> tags;
 
 }

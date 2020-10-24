@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "follow")
 public class Follow {
 
@@ -26,4 +27,5 @@ public class Follow {
     @Column(name = "created_data")
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdData;
+
 }

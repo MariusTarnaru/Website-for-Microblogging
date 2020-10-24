@@ -1,13 +1,13 @@
 package sda.backend.server.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Builder
 @Data
+@Builder
+@NoArgsConstructor
 @Table(name = "avatar")
 public class Avatar {
 
@@ -21,4 +21,5 @@ public class Avatar {
 
     @OneToOne(mappedBy = "avatar")
     private Account avatarAccount;
+
 }

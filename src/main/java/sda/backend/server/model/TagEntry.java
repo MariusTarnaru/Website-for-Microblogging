@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "tag_entry")
 public class TagEntry {
 
