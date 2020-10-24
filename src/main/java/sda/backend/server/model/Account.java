@@ -33,7 +33,6 @@ public class Account {
     private String displayName;
 
     @Column(name = "created_data")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime cratedAccount;
     /*private CurrentDateTimeProvider createdAccount;*/
