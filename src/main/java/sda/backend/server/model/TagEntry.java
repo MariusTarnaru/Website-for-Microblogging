@@ -1,15 +1,12 @@
 package sda.backend.server.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @Table(name = "tag_entry")
 public class TagEntry {
 
@@ -23,4 +20,5 @@ public class TagEntry {
 
     @Column(name = "entry_id", nullable = false)
     private  Long entryId;
+
 }

@@ -1,8 +1,6 @@
 package sda.backend.server.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,9 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @Table(name = "likes")
 public class Like {
 
@@ -25,7 +22,6 @@ public class Like {
     private Long count;
 
     @Column(name = "created_data")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdData;
 
