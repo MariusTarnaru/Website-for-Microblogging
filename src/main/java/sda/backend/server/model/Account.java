@@ -1,18 +1,21 @@
 package sda.backend.server.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
+
 @Table(name = "account")
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id")
@@ -41,9 +44,15 @@ public class Account {
     private AccountStatus accountStatus;
 
     @Column(name = "avatar_id")
-    private String avatar;
+    private String avatarId;
 
     @Column(name = "account_type")
     private AccountType accountType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    private List<Entry> entry;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "avatarAccount")
+    private Avatar avatar;
 
 }
