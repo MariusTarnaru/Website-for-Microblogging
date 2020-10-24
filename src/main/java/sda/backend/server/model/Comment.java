@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "comment")
 public class Comment {
 
@@ -29,4 +30,5 @@ public class Comment {
 
     @Column(name = "account_id")
     private long accountId;
+
 }
