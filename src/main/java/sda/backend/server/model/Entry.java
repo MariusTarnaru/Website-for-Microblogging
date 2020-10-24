@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "entry")
 public class Entry {
     @Id

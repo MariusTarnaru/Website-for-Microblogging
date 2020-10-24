@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tag_entry")
 public class TagEntry {
 

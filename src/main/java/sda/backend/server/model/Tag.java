@@ -10,6 +10,7 @@ import java.util.*;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tag")
 public class Tag {
     @Id

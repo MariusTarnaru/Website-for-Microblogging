@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "likes")
 public class Like {
 
