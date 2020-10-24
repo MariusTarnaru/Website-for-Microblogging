@@ -32,18 +32,20 @@ public class Entry {
     private LocalDateTime createdDate;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private EntryStatus status;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private EntryType type;
 
     /*@Column(name = "account_id")
     private long accountId;*/
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Tag> tags;
 
 }

@@ -20,7 +20,7 @@ public class Avatar {
     @Column
     private String path;
 
-    @OneToOne(mappedBy = "avatar")
+    @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
     private Account account;
 
 }
