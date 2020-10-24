@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "avatar")
 public class Avatar {
 
@@ -21,6 +22,4 @@ public class Avatar {
     @OneToOne(mappedBy = "avatar")
     private Account avatarAccount;
 
-    public Avatar() {
-    }
 }

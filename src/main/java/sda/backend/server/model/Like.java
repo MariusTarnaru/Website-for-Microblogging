@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "likes")
 public class Like {
 
@@ -31,6 +32,4 @@ public class Like {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    public Like() {
-    }
 }

@@ -9,6 +9,7 @@ import java.util.*;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "tag")
 public class Tag {
     @Id
@@ -32,7 +33,4 @@ public class Tag {
             inverseJoinColumns = @JoinColumn(name = "entry_id"))
     private List<Entry> entries;
 
-
-    public Tag() {
-    }
 }

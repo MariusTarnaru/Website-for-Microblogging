@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "tag_entry")
 public class TagEntry {
 
@@ -21,6 +22,4 @@ public class TagEntry {
     @Column(name = "entry_id", nullable = false)
     private  Long entryId;
 
-    public TagEntry() {
-    }
 }

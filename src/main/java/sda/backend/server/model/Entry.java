@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @Table(name = "entry")
 public class Entry {
     @Id
@@ -44,7 +45,4 @@ public class Entry {
     @ManyToMany
     private List<Tag> tags;
 
-
-    public Entry() {
-    }
 }

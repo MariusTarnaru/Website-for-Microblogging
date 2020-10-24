@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @Builder
-
+@NoArgsConstructor
 @Table(name = "account")
 public class Account {
 
@@ -55,7 +55,4 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "avatarAccount")
     private Avatar avatar;
 
-
-    public Account() {
-    }
 }
