@@ -1,16 +1,19 @@
 package sda.backend.server.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sda.backend.server.model.AccountStatus;
 import sda.backend.server.model.AccountType;
+import sda.backend.server.model.Avatar;
 
 import java.time.LocalDateTime;
 
 @Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class DTOAccount {
 
     private Long accountId;
@@ -27,7 +30,7 @@ public class DTOAccount {
 
     private AccountStatus accountStatus;
 
-    private String avatar;
+    private Avatar avatar;
 
     private AccountType accountType;
 

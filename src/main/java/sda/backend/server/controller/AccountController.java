@@ -10,11 +10,13 @@ import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.model.Account;
 import sda.backend.server.service.AccountService;
 
+import java.util.List;
+
 
 @RestController
 @Transactional
 @Validated
-@RequestMapping("/api")
+@RequestMapping("/")
 public class AccountController {
 
     private final AccountService accountService;
@@ -27,5 +29,10 @@ public class AccountController {
     @GetMapping("/login")
     public DTOAccount loginByEmail(String email) {
         return accountService.getAccountByEmail(email);
+    }
+
+    @GetMapping("/accounts")
+    public List<DTOAccount> getAllAccounts(){
+        return accountService.getAllAccounts();
     }
 }
