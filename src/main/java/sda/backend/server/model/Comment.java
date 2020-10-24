@@ -1,17 +1,15 @@
 package sda.backend.server.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @Table(name = "comment")
 public class Comment {
 
@@ -23,9 +21,8 @@ public class Comment {
     private String content;
 
     @Column(name = "created_data")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd.MM.yyyy hh:mm")
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "entry_id")
     private long entryId;

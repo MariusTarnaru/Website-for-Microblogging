@@ -1,16 +1,14 @@
 package sda.backend.server.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 @Table(name = "tag")
 public class Tag {
     @Id
@@ -26,4 +24,14 @@ public class Tag {
 
     @Column(name = "tag_entry_id")
     private Long tagEntryId;
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tag_entry",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "entry_id"))
+    private List<Entry> entries = new ArrayList<>();
+
+
+
 }
