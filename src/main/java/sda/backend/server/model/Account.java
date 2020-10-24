@@ -47,7 +47,7 @@ public class Account {
     private List<Entry> entry;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "avatar_id", referencedColumnName = "avatarId")
+    @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
 }
