@@ -21,4 +21,6 @@ public class TagEntry {
     @Column(name = "entry_id", nullable = false)
     private  Long entryId;
 
+    public TagEntry() {
+    }
 }

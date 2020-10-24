@@ -55,4 +55,7 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "avatarAccount")
     private Avatar avatar;
 
+
+    public Account() {
+    }
 }

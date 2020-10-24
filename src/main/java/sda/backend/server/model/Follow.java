@@ -26,4 +26,7 @@ public class Follow {
     @Column(name = "created_data")
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdData;
+
+    public Follow() {
+    }
 }

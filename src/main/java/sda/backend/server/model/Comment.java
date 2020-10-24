@@ -29,4 +29,7 @@ public class Comment {
 
     @Column(name = "account_id")
     private long accountId;
+
+    public Comment() {
+    }
 }

@@ -30,4 +30,7 @@ public class Like {
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;
+
+    public Like() {
+    }
 }

@@ -20,4 +20,7 @@ public class Avatar {
 
     @OneToOne(mappedBy = "avatar")
     private Account avatarAccount;
+
+    public Avatar() {
+    }
 }

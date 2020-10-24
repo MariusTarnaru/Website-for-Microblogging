@@ -30,8 +30,9 @@ public class Tag {
     @JoinTable(name = "tag_entry",
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "entry_id"))
-    private List<Entry> entries = new ArrayList<>();
+    private List<Entry> entries;
 
 
-
+    public Tag() {
+    }
 }
