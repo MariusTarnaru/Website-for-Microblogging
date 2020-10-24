@@ -41,16 +41,14 @@ public class Account {
     @Column(name = "account_status")
     private AccountStatus accountStatus;
 
-    @Column(name = "avatar_id")
-    private String avatarId;
-
     @Column(name = "account_type")
     private AccountType accountType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<Entry> entry;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "avatarAccount")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "avatar_id", referencedColumnName = "avatarId")
     private Avatar avatar;
 
 }

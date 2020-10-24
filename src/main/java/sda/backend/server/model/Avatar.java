@@ -21,6 +21,6 @@ public class Avatar {
     private String path;
 
     @OneToOne(mappedBy = "avatar")
-    private Account avatarAccount;
+    private Account account;
 
 }
