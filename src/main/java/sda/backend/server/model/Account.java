@@ -1,5 +1,8 @@
 package sda.backend.server.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.auditing.CurrentDateTimeProvider;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "account")
 public class Account {
     @Id

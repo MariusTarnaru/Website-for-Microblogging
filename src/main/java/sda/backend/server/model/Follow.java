@@ -1,11 +1,17 @@
 package sda.backend.server.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "follow")
 public class Follow {
 

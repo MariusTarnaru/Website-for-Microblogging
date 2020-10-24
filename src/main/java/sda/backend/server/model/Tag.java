@@ -1,10 +1,16 @@
 package sda.backend.server.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "tag")
 public class Tag {
     @Id

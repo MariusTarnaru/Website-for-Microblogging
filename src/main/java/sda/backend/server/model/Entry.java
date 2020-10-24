@@ -1,9 +1,13 @@
 package sda.backend.server.model;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter @Setter @ToString
 @Table(name = "entry")
 public class Entry {
     @Id
@@ -31,7 +35,12 @@ public class Entry {
     @Column
     private EntryType type;
 
-    @Column(name = "account_id")
+    /*@Column(name = "account_id")
+    private long accountId;*/
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
     private long accountId;
+
 
 }
