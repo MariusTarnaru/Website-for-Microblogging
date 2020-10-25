@@ -1,4 +1,5 @@
 package sda.backend.server.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
@@ -43,9 +44,13 @@ public class Entry {
     private long accountId;*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "entry_id", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
 }

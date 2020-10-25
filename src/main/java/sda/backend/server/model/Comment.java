@@ -32,4 +32,8 @@ public class Comment {
     @Column(name = "account_id")
     private long accountId;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "entry_id", nullable = false)
+    private Entry entry;
+
 }
