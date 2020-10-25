@@ -3,9 +3,14 @@ package sda.backend.server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOAccount;
+import sda.backend.server.exception.EmailAlreadyUsedException;
+import sda.backend.server.exception.UserNotFoundException;
 import sda.backend.server.model.Account;
+import sda.backend.server.model.Avatar;
 import sda.backend.server.repository.AccountRepository;
+import sda.backend.server.repository.AvatarRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,10 +18,12 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final AvatarRepository avatarRepository;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository) {
         this.accountRepository = accountRepository;
+        this.avatarRepository = avatarRepository;
     }
 
     private DTOAccount accountToDTOAcount(Account account) {
@@ -50,7 +57,7 @@ public class AccountService {
     }
 
     public DTOAccount getAccountByEmail(String email) {
-        return accountToDTOAcount(accountRepository.findByEmail(email));
+        return accountToDTOAcount(accountRepository.findByEmail(email).orElseThrow(() -> new EmailAlreadyUsedException()));
     }
 
 
@@ -60,7 +67,26 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-    public DTOAccount getAccountByUsername(String username) {
-        return accountToDTOAcount(accountRepository.findByUsername(username));
+    public DTOAccount getAccountById(Long id) {
+        return accountToDTOAcount(accountRepository.findById(id).orElseThrow(() -> new UserNotFoundException()));
     }
+
+    public DTOAccount getAccountByUsername(String username) {
+        return accountToDTOAcount(accountRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException()));
+    }
+
+    public void saveAccount(DTOAccount account) {
+        if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        }
+        Account newAccount = DTOAccountToAcount(account);
+        newAccount.setCratedAccount(LocalDateTime.now());
+        Avatar avatar = new Avatar();
+        avatar.setPath(account.getAvatar().getPath());
+        account.setAvatar(avatar);
+        avatar.setAccount(newAccount);
+        accountRepository.save(newAccount);
+    }
+
+
 }
