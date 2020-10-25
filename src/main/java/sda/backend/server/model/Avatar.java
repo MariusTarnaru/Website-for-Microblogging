@@ -17,12 +17,11 @@ public class Avatar {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, name = "avatar_id")
     private Long avatarId;
-
     @Column
     private String path;
 
     @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id" ,referencedColumnName = "avatar_id")
+    @JoinColumn(name = "account_id", referencedColumnName = "avatar_id")
     @JsonIgnore
     private Account account;
 

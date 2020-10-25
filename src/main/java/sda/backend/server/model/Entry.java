@@ -32,25 +32,23 @@ public class Entry {
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdDate;
 
-    @Column
+    @Column(columnDefinition = "enum(ORIGINAL,EDITED)")
     @Enumerated(EnumType.STRING)
     private EntryStatus status;
 
-    @Column
+    @Column(columnDefinition = "enum(ENTRY,COMMENT,SHARED_ENTRY)")
     @Enumerated(EnumType.STRING)
     private EntryType type;
 
-    /*@Column(name = "account_id")
-    private long accountId;*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     @JsonIgnore
     private Account account;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "entries")
     private List<Tag> tags;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
     private List<Comment> comments;
 
 }
