@@ -6,14 +6,13 @@ import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.model.Account;
 import sda.backend.server.repository.AccountRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     public AccountService(AccountRepository accountRepository) {
@@ -56,8 +55,12 @@ public class AccountService {
 
 
     public List<DTOAccount> getAllAccounts() {
-       return accountRepository.findAll().stream()
-               .map(this::accountToDTOAcount)
-               .collect(Collectors.toList());
+        return accountRepository.findAll().stream()
+                .map(this::accountToDTOAcount)
+                .collect(Collectors.toList());
+    }
+
+    public DTOAccount getAccountByUsername(String username) {
+        return accountToDTOAcount(accountRepository.findByUsername(username));
     }
 }

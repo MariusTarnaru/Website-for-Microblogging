@@ -9,7 +9,8 @@
     <include file="\liquibase\entry.sql"/>
     <include file="\liquibase\shared_entry.sql"/>
     <include file="\liquibase\comment.sql"/>
-    <include file="\liquibase\follow.sql"/>
+    <include file="\liquibase\follower.sql"/>
+    <include file="\liquibase\followed.sql"/>
     <include file="\liquibase\like.sql"/>
     <include file="\liquibase\tag.sql"/>
     <include file="\liquibase\tag_entry.sql"/>
@@ -24,6 +25,7 @@
     <include file="\liquibase\insert_into_tag.sql"/>
     <include file="\liquibase\insert_into_tag_entry.sql"/>
     <include file="\liquibase\update_tag_add_tag_entry_id.sql"/>
-    <include file="\liquibase\insert_into_follow.sql"/>
+    <include file="\liquibase\insert_into_followed.sql"/>
+    <include file="\liquibase\insert_into_follower.sql"/>
 
 </databaseChangeLog>
