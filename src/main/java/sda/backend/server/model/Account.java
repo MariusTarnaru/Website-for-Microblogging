@@ -56,10 +56,10 @@ public class Account {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Comment> comments;
 
-    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Followed> followeds;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
-    private List<Follower> followers;*/
+    private List<Follower> followers;
 
 }

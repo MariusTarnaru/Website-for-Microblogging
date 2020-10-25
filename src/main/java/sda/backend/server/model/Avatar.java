@@ -21,7 +21,7 @@ public class Avatar {
     private String path;
 
     @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
-    @JoinColumn(name = "avatar", referencedColumnName = "avatar_id")
+    @JoinColumn(name = "account_id", referencedColumnName = "avatar_id")
     @JsonIgnore
     private Account account;
 
