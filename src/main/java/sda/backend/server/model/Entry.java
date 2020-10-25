@@ -50,7 +50,7 @@ public class Entry {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "entry_id", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Comment> comments;
 
 }

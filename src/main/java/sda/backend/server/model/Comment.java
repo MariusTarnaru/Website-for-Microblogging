@@ -1,5 +1,6 @@
 package sda.backend.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,14 +27,13 @@ public class Comment {
     @DateTimeFormat(pattern = "dd.MM.yyyy hh:mm")
     private LocalDateTime createdDate;
 
-    @Column(name = "entry_id")
-    private long entryId;
-
-    @Column(name = "account_id")
-    private long accountId;
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "entry_id", nullable = false)
     private Entry entry;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnore
+    private Account account;
 
 }
