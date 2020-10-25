@@ -1,5 +1,6 @@
 package sda.backend.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
@@ -46,6 +47,7 @@ public class Account {
     private AccountType accountType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Entry> entry;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

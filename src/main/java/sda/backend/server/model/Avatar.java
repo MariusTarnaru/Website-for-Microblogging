@@ -1,5 +1,6 @@
 package sda.backend.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Avatar {
     private String path;
 
     @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Account account;
 
 }
