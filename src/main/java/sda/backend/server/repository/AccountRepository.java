@@ -5,17 +5,16 @@ import org.springframework.stereotype.Repository;
 import sda.backend.server.model.Account;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    Account findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 
-    Account findById(long id);
-
-    Account findByUsername(String username);
-
-    Account findByDisplayName(String displayName);
+    Optional<Account> findByDisplayName(String displayName);
 
     List<Account> findAll();
+
+    Optional<Account> findByUsername(String username);
 }

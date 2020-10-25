@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sda.backend.server.dto.DTOAccount;
+import sda.backend.server.model.Account;
 import sda.backend.server.service.AccountService;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class AccountController {
 
-    private final AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
     public AccountController(AccountService accountService) {
@@ -36,5 +37,16 @@ public class AccountController {
     public DTOAccount getByUsername( @PathVariable String username){
        return accountService.getAccountByUsername(username);
     }
+
+    @GetMapping("accounts/{id}")
+    public DTOAccount getById( @PathVariable Long id){
+        return accountService.getAccountById(id);
+    }
+
+    @PostMapping("/addAccount")
+    public void saveAccount(@RequestBody DTOAccount account){
+        accountService.saveAccount(account);
+    }
+
 
 }

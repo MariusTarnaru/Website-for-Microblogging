@@ -14,14 +14,15 @@ import javax.persistence.*;
 public class Avatar {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, name = "avatar_id")
     private Long avatarId;
-    @Column(nullable = false, name = "account_id")
-    private Long accountId;
+
     @Column
     private String path;
 
     @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id" ,referencedColumnName = "avatar_id")
     @JsonIgnore
     private Account account;
 
