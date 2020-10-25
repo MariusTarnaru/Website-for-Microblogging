@@ -36,13 +36,12 @@ public class Account {
     @Column(name = "created_data")
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime cratedAccount;
-    /*private CurrentDateTimeProvider createdAccount;*/
 
-    @Column(name = "account_status")
+    @Column(name = "account_status", columnDefinition="enum(ACTIVE,INACTIVE,BLOCKED)")
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    @Column(name = "account_type")
+    @Column(name = "account_type", columnDefinition="enum(PUBLIC, PRIVATE)")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
@@ -54,7 +53,13 @@ public class Account {
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Comment> comments;
+
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    private List<Followed> followeds;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    private List<Follower> followers;*/
 
 }

@@ -27,11 +27,11 @@ public class Comment {
     @DateTimeFormat(pattern = "dd.MM.yyyy hh:mm")
     private LocalDateTime createdDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entry_id", nullable = false)
     private Entry entry;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     @JsonIgnore
     private Account account;
