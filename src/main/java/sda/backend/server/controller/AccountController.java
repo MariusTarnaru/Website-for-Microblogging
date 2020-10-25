@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sda.backend.server.dto.DTOAccount;
-import sda.backend.server.model.Account;
 import sda.backend.server.service.AccountService;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public List<DTOAccount> getAllAccounts(){
+    public List<DTOAccount> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 }

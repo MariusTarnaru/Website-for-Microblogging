@@ -20,7 +20,6 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    // TODO: 10/24/2020
     private DTOAccount accountToDTOAcount(Account account) {
         DTOAccount dtoAccount = DTOAccount.builder()
                 .accountId(account.getAccountId())
@@ -36,7 +35,6 @@ public class AccountService {
         return dtoAccount;
     }
 
-    // TODO: 10/24/2020
     private Account DTOAccountToAcount(DTOAccount dtoAccount) {
         Account account = Account.builder()
                 .accountId(dtoAccount.getAccountId())
@@ -55,6 +53,7 @@ public class AccountService {
     public DTOAccount getAccountByEmail(String email) {
         return accountToDTOAcount(accountRepository.findByEmail(email));
     }
+
 
     public List<DTOAccount> getAllAccounts() {
        return accountRepository.findAll().stream()
