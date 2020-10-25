@@ -54,4 +54,7 @@ public class Account {
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
 }
