@@ -24,7 +24,7 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    public DTOAccount loginByEmail(String email) {
+    public DTOAccount getByEmail(String email) {
         return accountService.getAccountByEmail(email);
     }
 

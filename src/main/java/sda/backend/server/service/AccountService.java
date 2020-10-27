@@ -1,6 +1,7 @@
 package sda.backend.server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.exception.EmailAlreadyUsedException;
@@ -19,11 +20,13 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AvatarRepository avatarRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository) {
+    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.accountRepository = accountRepository;
         this.avatarRepository = avatarRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     private DTOAccount accountToDTOAcount(Account account) {
@@ -45,7 +48,7 @@ public class AccountService {
         Account account = Account.builder()
                 .accountId(dtoAccount.getAccountId())
                 .email(dtoAccount.getEmail())
-                .password(dtoAccount.getPassword())
+                .password(bCryptPasswordEncoder.encode(dtoAccount.getPassword()))
                 .username(dtoAccount.getUsername())
                 .displayName(dtoAccount.getDisplayName())
                 .avatar(dtoAccount.getAvatar())
