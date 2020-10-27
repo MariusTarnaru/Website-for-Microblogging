@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -54,12 +55,19 @@ public class Account {
     private Avatar avatar;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
     private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
     private List<Followed> followeds;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
     private List<Follower> followers;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
+    Set<Like> likes;
 
 }

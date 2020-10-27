@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -50,5 +51,8 @@ public class Entry {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
     private List<Comment> comments;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    private Set<Like> likes;
 
 }
