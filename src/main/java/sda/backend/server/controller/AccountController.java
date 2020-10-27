@@ -1,11 +1,12 @@
 package sda.backend.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sda.backend.server.dto.DTOAccount;
-import sda.backend.server.model.Account;
 import sda.backend.server.service.AccountService;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    public DTOAccount loginByEmail(String email) {
-        return accountService.getAccountByEmail(email);
+    public boolean login(@RequestBody DTOAccount account) {
+        return account.getEmail().equals("email") && account.getPassword().equals("password");
     }
 
     @GetMapping("/accounts")
@@ -34,21 +35,20 @@ public class AccountController {
     }
 
     @GetMapping("/{username}")
-    public DTOAccount getByUsername( @PathVariable String username){
-       return accountService.getAccountByUsername(username);
+    public DTOAccount getByUsername(@PathVariable String username) {
+        return accountService.getAccountByUsername(username);
     }
 
     @GetMapping("accounts/{id}")
-    public DTOAccount getById( @PathVariable Long id){
+    public DTOAccount getById(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 
     @PostMapping("/addAccount")
-    public void saveAccount(@RequestBody DTOAccount account){
+    public ResponseEntity<DTOAccount> saveAccount(@RequestBody DTOAccount account) {
         accountService.saveAccount(account);
+        return new ResponseEntity<>(accountService.getAccountByEmail(account.getEmail()), HttpStatus.OK);
     }
-
-
 
 
 }
