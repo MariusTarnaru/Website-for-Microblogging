@@ -1,7 +1,6 @@
 package sda.backend.server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.exception.EmailAlreadyUsedException;
@@ -20,13 +19,11 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AvatarRepository avatarRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository) {
         this.accountRepository = accountRepository;
         this.avatarRepository = avatarRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     private DTOAccount accountToDTOAcount(Account account) {
@@ -48,7 +45,7 @@ public class AccountService {
         Account account = Account.builder()
                 .accountId(dtoAccount.getAccountId())
                 .email(dtoAccount.getEmail())
-                .password(bCryptPasswordEncoder.encode(dtoAccount.getPassword()))
+                .password(dtoAccount.getPassword())
                 .username(dtoAccount.getUsername())
                 .displayName(dtoAccount.getDisplayName())
                 .avatar(dtoAccount.getAvatar())
@@ -60,7 +57,9 @@ public class AccountService {
     }
 
     public DTOAccount getAccountByEmail(String email) {
-        return accountToDTOAcount(accountRepository.findByEmail(email).orElseThrow(() -> new EmailAlreadyUsedException()));
+        Account accountFromDB = accountRepository.findByEmail(email).orElseThrow(() -> new EmailAlreadyUsedException());
+
+        return accountToDTOAcount(accountRepository.findByEmail(email).get());
     }
 
 
