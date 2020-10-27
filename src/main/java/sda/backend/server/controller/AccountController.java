@@ -1,6 +1,8 @@
 package sda.backend.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +45,9 @@ public class AccountController {
     }
 
     @PostMapping("/addAccount")
-    public void saveAccount(@RequestBody DTOAccount account) {
+    public ResponseEntity<DTOAccount> saveAccount(@RequestBody DTOAccount account) {
         accountService.saveAccount(account);
+        return new ResponseEntity<>(accountService.getAccountByEmail(account.getEmail()), HttpStatus.OK);
     }
 
 

@@ -4,6 +4,7 @@ import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -18,7 +19,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    public  DataSource getDataSource() {
+    public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/twitter");
@@ -26,5 +27,11 @@ public class AppConfiguration {
         dataSourceBuilder.password("root");
         return dataSourceBuilder.build();
     }
+
+    @Bean
+    public BCryptPasswordEncoder getEncoding(){
+        return new BCryptPasswordEncoder();
+    }
+
 
 }

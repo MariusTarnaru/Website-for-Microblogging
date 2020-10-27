@@ -37,24 +37,22 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-
-                .userDetailsService(email -> {
-                            Optional<Account> account = accountRepository.findByEmail(email);
-                            if (account.isPresent()) {
-                                return new User(
-                                        account.get().getEmail(),
-                                        account.get().getPassword(),
-                                        true,
-                                        true,
-                                        true,
-                                        true,
-                                        AuthorityUtils.createAuthorityList("USER"));
-                            } else {
-                                throw new UserNotFoundException();
-                            }
-                        }
-                )
+        auth.userDetailsService(email -> {
+                    Optional<Account> account = accountRepository.findByEmail(email);
+                    if (account.isPresent()) {
+                        return new User(
+                                account.get().getEmail(),
+                                account.get().getPassword(),
+                                true,
+                                true,
+                                true,
+                                true,
+                                AuthorityUtils.createAuthorityList("USER"));
+                    } else {
+                        throw new UserNotFoundException();
+                    }
+                }
+        )
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 }
