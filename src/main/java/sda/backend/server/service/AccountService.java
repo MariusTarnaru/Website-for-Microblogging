@@ -60,7 +60,7 @@ public class AccountService {
     }
 
     public DTOAccount getAccountByEmail(String email) {
-        Account accountFromDB = accountRepository.findByEmail(email).orElseThrow(() -> new EmailAlreadyUsedException());
+        Account accountFromDB = accountRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
 
         return accountToDTOAcount(accountRepository.findByEmail(email).get());
     }
