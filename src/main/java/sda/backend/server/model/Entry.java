@@ -55,4 +55,8 @@ public class Entry {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
     private Set<Like> likes;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    @JsonIgnore
+    private Set<SharedEntry> sharedEntries;
+
 }
