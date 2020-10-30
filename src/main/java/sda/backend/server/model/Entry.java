@@ -59,4 +59,7 @@ public class Entry {
     @JsonIgnore
     private Set<SharedEntry> sharedEntries;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    private List<TagEntry> tagEntries;
+
 }
