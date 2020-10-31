@@ -70,4 +70,8 @@ public class Account {
     @JsonIgnore
     Set<Like> likes;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
+    Set<SharedEntry> entries;
+
 }

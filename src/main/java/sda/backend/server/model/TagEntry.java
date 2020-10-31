@@ -1,8 +1,10 @@
 package sda.backend.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,7 +22,8 @@ public class TagEntry {
     @Column(name = "tag_id", nullable = false)
     private Long tagId;
 
-    @Column(name = "entry_id", nullable = false)
-    private  Long entryId;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "entry_id")
+    @JsonIgnore
+    private Entry entry;
 }
