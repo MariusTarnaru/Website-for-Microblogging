@@ -1,5 +1,6 @@
 package sda.backend.server.controller;
 
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,8 @@ import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.service.AccountService;
 
 import java.util.List;
-@CrossOrigin(origins = "${cors.allowedOrigins}",maxAge = 3600)
+
+@CrossOrigin(origins = "http://localhost:4200, http://localhost:8081, http://localhost:8080",maxAge = 3600)
 @RestController
 @Transactional
 @Validated
