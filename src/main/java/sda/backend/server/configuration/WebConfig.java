@@ -2,12 +2,14 @@ package sda.backend.server.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
+@Profile("development")
 public class WebConfig implements WebMvcConfigurer {
     @Value("${cors.allowedOrigins}")
     private String allowedOrigins;
