@@ -26,7 +26,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/register");
+        web.ignoring().antMatchers(HttpMethod.POST,"/api/register","api/login");
     }
 
     @Override
@@ -42,8 +42,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(email -> {
+        auth.userDetailsService(email -> {
                             Optional<Account> account = accountRepository.findByEmail(email);
                             if (account.isPresent()) {
                                 return new User(

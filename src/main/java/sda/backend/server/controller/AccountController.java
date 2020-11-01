@@ -24,9 +24,9 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/login")
-    public List<DTOAccount>  login() {
-     return getAllAccounts();
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody DTOAccount account) {
+        return null;
     }
 
     @GetMapping("/accounts")
@@ -45,8 +45,9 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public void saveAccount(@RequestBody DTOAccount account) {
+    public ResponseEntity saveAccount(@RequestBody DTOAccount account) {
         accountService.saveAccount(account);
+        return new ResponseEntity(accountService.getAccountByEmail(account.getEmail()),HttpStatus.CREATED);
     }
 
 

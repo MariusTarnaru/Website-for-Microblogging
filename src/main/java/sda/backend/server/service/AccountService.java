@@ -90,6 +90,10 @@ public class AccountService {
         avatar.setPath(account.getAvatar().getPath());
         account.setAvatar(avatar);
         avatar.setAccount(newAccount);
-        accountRepository.save(newAccount);
+        accountRepository.save(newAccount);;
+    }
+
+    public boolean accountExists(String email) {
+        return accountRepository.findByEmail(email).isPresent();
     }
 }

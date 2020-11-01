@@ -30,7 +30,6 @@ public class Account {
     @Column(unique = true, nullable = false, name = "account_name")
     private String username;
 
-
     @Column(unique = true, name = "display_name")
     private String displayName;
 
