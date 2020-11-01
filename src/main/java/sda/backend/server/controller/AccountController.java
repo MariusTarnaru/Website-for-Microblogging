@@ -12,7 +12,6 @@ import sda.backend.server.service.AccountService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200/api/register, http://localhost:8081, http://localhost:8080",maxAge = 3600)
 @RestController
 @Transactional
 @Validated
