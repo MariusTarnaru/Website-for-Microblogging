@@ -10,7 +10,7 @@ import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.service.AccountService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "${cors.allowedOrigins}",maxAge = 3600)
 @RestController
 @Transactional
 @Validated
