@@ -1,6 +1,5 @@
 package sda.backend.server.controller;
 
-import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +26,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody DTOAccount account) {
+        System.out.println(account);
         return null;
     }
 

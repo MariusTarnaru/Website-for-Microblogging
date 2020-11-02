@@ -26,7 +26,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.POST,"/api/register","api/login");
+        web.ignoring().antMatchers("/register","/login");
     }
 
     @Override
@@ -36,18 +36,18 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
-                .and()
+                .and().cors().and()
                 .csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(email -> {
-                            Optional<Account> account = accountRepository.findByEmail(email);
-                            if (account.isPresent()) {
+        auth.userDetailsService(user -> {
+                            Optional<Account> accountFromDB = accountRepository.findByEmail(user);
+                            if (accountFromDB.isPresent()) {
                                 return new User(
-                                        account.get().getEmail(),
-                                        account.get().getPassword(),
+                                        accountFromDB.get().getEmail(),
+                                        accountFromDB.get().getPassword(),
                                         true,
                                         true,
                                         true,
