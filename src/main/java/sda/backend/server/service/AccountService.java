@@ -78,7 +78,11 @@ public class AccountService {
         return accountToDTOAcount(accountRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException()));
     }
 
-    public void saveAccount(DTOAccount account) {
+    public DTOAccount saveAccount(DTOAccount account) {
+
+        if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        }
         if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         }
@@ -89,7 +93,7 @@ public class AccountService {
         account.setAvatar(avatar);
         avatar.setAccount(newAccount);
         accountRepository.save(newAccount);
-        ;
+        return accountToDTOAcount(accountRepository.findByEmail(newAccount.getEmail()).get());
     }
 
     public boolean accountExists(String email) {

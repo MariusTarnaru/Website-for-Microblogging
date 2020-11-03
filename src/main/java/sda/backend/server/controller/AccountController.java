@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.service.AccountService;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -47,9 +49,11 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity saveAccount(@RequestBody DTOAccount account) {
-        accountService.saveAccount(account);
-        return new ResponseEntity(accountService.getAccountByEmail(account.getEmail()),HttpStatus.CREATED);
+    public ResponseEntity saveAccount(@RequestBody @Valid DTOAccount account) {
+
+            DTOAccount dtoAccountFromDB = accountService.saveAccount(account);
+            return new ResponseEntity<>(dtoAccountFromDB,HttpStatus.CREATED);
+
     }
 
 

@@ -8,6 +8,8 @@ import sda.backend.server.model.AccountStatus;
 import sda.backend.server.model.AccountType;
 import sda.backend.server.model.Avatar;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Builder
@@ -18,12 +20,13 @@ public class DTOAccount {
 
     private Long accountId;
 
+    @Email(message = "Email type")
     private String email;
-
+    @NotEmpty
     String password;
-
+    @NotEmpty
     private String username;
-
+    @NotEmpty
     private String displayName;
 
     private LocalDateTime cratedAccount;
