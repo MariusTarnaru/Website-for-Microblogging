@@ -11,6 +11,7 @@ import sda.backend.server.service.AccountService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Transactional
 @Validated
