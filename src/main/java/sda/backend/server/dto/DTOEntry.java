@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sda.backend.server.model.EntryStatus;
-import sda.backend.server.model.EntryType;
+import sda.backend.server.model.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 @Data
@@ -28,5 +29,17 @@ public class DTOEntry {
     private EntryStatus status;
 
     private EntryType type;
+
+    private Account account;
+
+    private List<Tag> tags;
+
+    private List<Comment> comments;
+
+    private Set<Like> likes;
+
+    private Set<SharedEntry> sharedEntries;
+
+    private List<TagEntry> tagEntries;
 
 }

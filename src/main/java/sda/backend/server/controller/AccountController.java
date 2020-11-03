@@ -29,8 +29,8 @@ public class AccountController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody DTOAccount account) {
-        System.out.println(account);
-        return null;
+        DTOAccount dtoAccount = accountService.getAccountByEmail(account.getEmail());
+        return new ResponseEntity<>(dtoAccount,HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/accounts")
