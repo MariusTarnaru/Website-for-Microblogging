@@ -12,13 +12,10 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
     Optional<Account> findByEmail(String email);
 
-    Optional<Account> findByDisplayName(String displayName);
-
     List<Account> findAll();
 
+    Optional<Account> findByEmailAndPassword(String email, String password);
 
     Optional<Account> findByUsername(String username);
-
-
 
 }
