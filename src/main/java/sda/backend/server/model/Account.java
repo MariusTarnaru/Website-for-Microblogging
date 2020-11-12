@@ -3,8 +3,10 @@ package sda.backend.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import java.util.Set;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(exclude = {"avatar", "entries", "comments", "followed", "follower", "likes", "sharedEntries"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "account")
@@ -39,40 +42,82 @@ public class Account {
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdAccount;
 
-    @Column(name = "account_status", columnDefinition="enum(ACTIVE,INACTIVE,BLOCKED)")
+    @Column(name = "account_status", columnDefinition = "enum(ACTIVE,INACTIVE,BLOCKED)")
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    @Column(name = "account_type", columnDefinition="enum(PUBLIC, PRIVATE)")
+    @Column(name = "account_type", columnDefinition = "enum(PUBLIC, PRIVATE)")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Entry> entry;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(
+            mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
+    @JsonIgnore
+    private List<Entry> entries;
+
+    @OneToMany(mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
     @JsonIgnore
     private List<Comment> comments;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH}
+    )
     @JsonIgnore
     private List<Followed> followed;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH}
+    )
     @JsonIgnore
     private List<Follower> follower;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
     @JsonIgnore
     Set<Like> likes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH}
+    )
     @JsonIgnore
-    Set<SharedEntry> entries;
+    Set<SharedEntry> sharedEntries;
+
+    public void addEntry(Entry newEntry) {
+        if (entries == null) {
+            entries = new ArrayList<>();
+        }
+        entries.add(newEntry);
+        newEntry.setAccount(this);
+    }
 
 }

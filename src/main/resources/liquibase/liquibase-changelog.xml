@@ -4,8 +4,8 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <include file="\liquibase\account.sql"/>
     <include file="\liquibase\avatar.sql"/>
+    <include file="\liquibase\account.sql"/>
     <include file="\liquibase\entry.sql"/>
     <include file="\liquibase\shared_entry.sql"/>
     <include file="\liquibase\comment.sql"/>
@@ -16,8 +16,8 @@
     <include file="\liquibase\tag_entry.sql"/>
     <include file="\liquibase\update_tag_constrains_for_tag_entry_id.sql"/>
     <include file="\liquibase\update_tag_entry_contranins.sql"/>
-    <include file="\liquibase\insert_into_account.sql"/>
     <include file="\liquibase\insert_into_avatar.sql"/>
+    <include file="\liquibase\insert_into_account.sql"/>
     <include file="\liquibase\insert_into_entry.sql"/>
     <include file="\liquibase\insert_into_shared_entry.sql"/>
     <include file="\liquibase\insert_into_comment.sql"/>

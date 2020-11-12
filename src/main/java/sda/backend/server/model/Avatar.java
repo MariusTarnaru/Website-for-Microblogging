@@ -20,9 +20,4 @@ public class Avatar {
     @Column
     private String path;
 
-    @OneToOne(mappedBy = "avatar", fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id", referencedColumnName = "avatar_id")
-    @JsonIgnore
-    private Account account;
-
 }

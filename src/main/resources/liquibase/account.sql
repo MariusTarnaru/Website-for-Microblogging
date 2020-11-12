@@ -9,5 +9,6 @@ create table if not exists account
     account_status enum ('ACTIVE', 'INACTIVE', 'BLOCKED'),
     avatar_id      bigint unsigned        not null,
     account_type   enum ('PUBLIC', 'PRIVATE'),
-    primary key (account_id)
+    primary key (account_id),
+    constraint foreign key (avatar_id) REFERENCES avatar (avatar_id)
 );

@@ -64,7 +64,6 @@ public class AccountService {
         Avatar avatar = new Avatar();
         avatar.setPath(account.getAvatar().getPath());
         account.setAvatar(avatar);
-        avatar.setAccount(newAccount);
         accountRepository.save(newAccount);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

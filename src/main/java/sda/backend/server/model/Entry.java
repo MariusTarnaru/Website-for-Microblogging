@@ -1,7 +1,9 @@
 package sda.backend.server.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,7 +44,11 @@ public class Entry {
     @Enumerated(EnumType.STRING)
     private EntryType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
     @JsonIgnore
     private Account account;
@@ -50,13 +56,19 @@ public class Entry {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "entries")
     private List<Tag> tags;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private Set<Like> likes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    @OneToMany(mappedBy = "entry",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
     @JsonIgnore
     private Set<SharedEntry> sharedEntries;
 
