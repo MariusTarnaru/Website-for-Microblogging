@@ -27,7 +27,4 @@ public class AppConfiguration {
         dataSourceBuilder.password("root");
         return dataSourceBuilder.build();
     }
-
-
-
 }

@@ -1,4 +1,4 @@
-insert into avatar(path)
-values ('avatars/SabieGeorge.png'),
-       ('avatars/TarnaruMarius.png'),
-       ('avatars/BosacIonut.png');
+insert into avatar(path, account_id)
+values ('avatars/SabieGeorge.png', 1),
+       ('avatars/TarnaruMarius.png', 2),
+       ('avatars/BosacIonut.png', 3);

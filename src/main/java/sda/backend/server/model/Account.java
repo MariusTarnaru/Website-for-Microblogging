@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Data
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "account")
@@ -18,6 +19,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     @Column(name = "account_id")
     private Long accountId;
 
@@ -35,7 +37,7 @@ public class Account {
 
     @Column(name = "created_data")
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
-    private LocalDateTime cratedAccount;
+    private LocalDateTime createdAccount;
 
     @Column(name = "account_status", columnDefinition="enum(ACTIVE,INACTIVE,BLOCKED)")
     @Enumerated(EnumType.STRING)
@@ -49,27 +51,27 @@ public class Account {
     @JsonIgnore
     private List<Entry> entry;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
     private List<Comment> comments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
-    private List<Followed> followeds;
+    private List<Followed> followed;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
-    private List<Follower> followers;
+    private List<Follower> follower;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
     Set<Like> likes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
     Set<SharedEntry> entries;
 

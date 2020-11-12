@@ -4,15 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
 import sda.backend.server.model.AccountStatus;
 import sda.backend.server.model.AccountType;
 import sda.backend.server.model.Avatar;
-
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Builder
@@ -31,7 +25,7 @@ public class DTOAccount {
 
     private String displayName;
 
-    private LocalDateTime cratedAccount;
+    private LocalDateTime createdAccount;
 
     private AccountStatus accountStatus;
 

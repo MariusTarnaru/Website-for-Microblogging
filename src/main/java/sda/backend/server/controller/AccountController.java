@@ -22,28 +22,31 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<?> saveAccount(@RequestBody DTOAccount account) {
-            return accountService.saveAccount(account);
+        return accountService.saveAccount(account);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody DTOAccount account) {
         return accountService.login(account);
     }
+
     @GetMapping("/accounts/{id}")
-    public ResponseEntity<?> getAccountById(@PathVariable Long id){
+    public ResponseEntity<?> getAccountById(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<?> getAccountByUsername(@PathVariable String username){
+    public ResponseEntity<?> getAccountByUsername(@PathVariable String username) {
         return accountService.getAccountByUsername(username);
     }
 
-/*
-    @PutMapping("/accounts/{id}")
-    public ResponseEntity<?> updateUserById(DTOAccount dtoAccount, @PathVariable Long id){
+    @PatchMapping("/accounts/{id}")
+    public ResponseEntity<?> updateUserById(@RequestBody DTOAccount dtoAccount, @PathVariable Long id) {
         return accountService.updateUserById(dtoAccount, id);
     }
-*/
 
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+        return accountService.deleteUserById(id);
+    }
 }

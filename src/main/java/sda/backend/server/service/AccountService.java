@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sda.backend.server.util.AccountMapper;
 import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.model.Account;
 import sda.backend.server.model.Avatar;
@@ -11,22 +12,23 @@ import sda.backend.server.repository.AccountRepository;
 import sda.backend.server.repository.AvatarRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AvatarRepository avatarRepository;
+    private final AccountMapper accountMapper;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository) {
+    public AccountService(AccountRepository accountRepository, AvatarRepository avatarRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.avatarRepository = avatarRepository;
+        this.accountMapper = accountMapper;
     }
 
-    private DTOAccount accountToDTOAcount(Account account) {
-        DTOAccount dtoAccount = DTOAccount.builder()
+    private DTOAccount accountToDTOAccount(Account account) {
+        return DTOAccount.builder()
                 .accountId(account.getAccountId())
                 .email(account.getEmail())
                 .password(account.getPassword())
@@ -35,13 +37,12 @@ public class AccountService {
                 .avatar(account.getAvatar())
                 .accountStatus(account.getAccountStatus())
                 .accountType(account.getAccountType())
-                .cratedAccount(account.getCratedAccount())
+                .createdAccount(account.getCreatedAccount())
                 .build();
-        return dtoAccount;
     }
 
-    private Account DTOAccountToAcount(DTOAccount dtoAccount) {
-        Account account = Account.builder()
+    private Account DTOAccountToAccount(DTOAccount dtoAccount) {
+        return Account.builder()
                 .accountId(dtoAccount.getAccountId())
                 .email(dtoAccount.getEmail())
                 .password(dtoAccount.getPassword())
@@ -50,17 +51,16 @@ public class AccountService {
                 .avatar(dtoAccount.getAvatar())
                 .accountStatus(dtoAccount.getAccountStatus())
                 .accountType(dtoAccount.getAccountType())
-                .cratedAccount(dtoAccount.getCratedAccount())
+                .createdAccount(dtoAccount.getCreatedAccount())
                 .build();
-        return account;
     }
 
     public ResponseEntity<?> saveAccount(DTOAccount account) {
         if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        Account newAccount = DTOAccountToAcount(account);
-        newAccount.setCratedAccount(LocalDateTime.now());
+        Account newAccount = DTOAccountToAccount(account);
+        newAccount.setCreatedAccount(LocalDateTime.now());
         Avatar avatar = new Avatar();
         avatar.setPath(account.getAvatar().getPath());
         account.setAvatar(avatar);
@@ -79,15 +79,15 @@ public class AccountService {
 
     public ResponseEntity<?> getAccountById(Long id) {
         if (idExists(id)) {
-            DTOAccount account = accountToDTOAcount(accountRepository.findById(id).get());
+            DTOAccount account = accountToDTOAccount(accountRepository.findById(id).get());
             return new ResponseEntity<>(account, HttpStatus.ACCEPTED);
         }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     public ResponseEntity<?> getAccountByUsername(String username) {
         if (usernameExists(username)) {
-            DTOAccount account = accountToDTOAcount(accountRepository.findByUsername(username).get());
+            DTOAccount account = accountToDTOAccount(accountRepository.findByUsername(username).get());
             return new ResponseEntity<>(account, HttpStatus.ACCEPTED);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -101,12 +101,22 @@ public class AccountService {
         return accountRepository.findById(id).isPresent();
     }
 
-/*
     public ResponseEntity<?> updateUserById(DTOAccount dtoAccount, Long id) {
-        if(idExists(id)&&usernameExists(dtoAccount.getUsername())){
-            Account
-            return
+        if (idExists(id)) {
+            Account account = accountRepository.findById(id).get();
+            accountMapper.updateAccount(dtoAccount, account);
+            accountRepository.save(account);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
+        return ResponseEntity.notFound().build();
     }
-*/
+
+    public ResponseEntity<?> deleteUserById(Long id) {
+        if (idExists(id)) {
+            accountRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
