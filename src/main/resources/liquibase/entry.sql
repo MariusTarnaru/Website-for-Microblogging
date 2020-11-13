@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS entry
     type         ENUM ('ENTRY', 'COMMENT', 'SHARED_ENTRY') NOT NULL,
     account_id   BIGINT UNSIGNED                           NOT NULL,
     PRIMARY KEY (entry_id),
-    CONSTRAINT FOREIGN KEY (entry_id) REFERENCES account (account_id)
+    CONSTRAINT FOREIGN KEY (account_id) REFERENCES account (account_id)
 )
