@@ -23,9 +23,13 @@ public class EntryController {
     }
 
     @PostMapping("/addEntry")
-    public ResponseEntity addEntry(@RequestBody DTOEntry entry){
+    public ResponseEntity addEntry(@RequestBody DTOEntry entry) {
         DTOEntry dtoEntry = entryService.saveEntry(entry);
         return new ResponseEntity<>(dtoEntry, HttpStatus.CREATED);
     }
 
+    @GetMapping("/entrys/{id}")
+    public ResponseEntity getEntryById(Long id) {
+        return entryService.getEntryById(id);
+    }
 }

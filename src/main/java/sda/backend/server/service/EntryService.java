@@ -1,12 +1,13 @@
 package sda.backend.server.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOEntry;
 import sda.backend.server.model.Entry;
 import sda.backend.server.repository.EntryRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class EntryService {
@@ -16,6 +17,7 @@ public class EntryService {
     public EntryService(EntryRepository entryRepository) {
         this.entryRepository = entryRepository;
     }
+
     private DTOEntry entryToDTOEntry(Entry entry) {
         DTOEntry dtoEntry = DTOEntry.builder()
                 .entryId(entry.getEntryId())
@@ -61,4 +63,15 @@ public class EntryService {
         return entryToDTOEntry(entryRepository.findByContent(entry.getContent()).get());
     }
 
+    public ResponseEntity getEntryById(Long id) {
+        if (idExists(id)) {
+            DTOEntry entry = entryToDTOEntry(entryRepository.findById(id).get());
+            return new ResponseEntity<>(entry, HttpStatus.ACCEPTED);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    private boolean idExists(Long id) {
+        return entryRepository.existsById(id);
+    }
 }
