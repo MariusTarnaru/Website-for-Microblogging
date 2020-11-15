@@ -23,11 +23,25 @@ public class SharedEntry {
     @Column(name = "quote")
     private String quote;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "entry_id")
     private Entry entry;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "account_id")
     private Account account;
 

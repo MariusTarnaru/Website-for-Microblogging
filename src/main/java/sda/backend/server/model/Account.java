@@ -60,7 +60,9 @@ public class Account {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH}
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
     )
     @JsonIgnore
     private List<Entry> entries;
@@ -70,25 +72,32 @@ public class Account {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH}
+                    CascadeType.REFRESH
+            }
     )
     @JsonIgnore
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "account", cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH}
+    @OneToMany(mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
     )
     @JsonIgnore
     private List<Followed> followed;
 
-    @OneToMany(mappedBy = "account", cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH}
+    @OneToMany(mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
     )
     @JsonIgnore
     private List<Follower> follower;
@@ -98,16 +107,21 @@ public class Account {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH}
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
     )
     @JsonIgnore
     Set<Like> likes;
 
-    @OneToMany(mappedBy = "account", cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH}
+    @OneToMany(mappedBy = "account",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
     )
     @JsonIgnore
     Set<SharedEntry> sharedEntries;

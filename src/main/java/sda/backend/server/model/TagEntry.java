@@ -22,7 +22,14 @@ public class TagEntry {
     @Column(name = "tag_id", nullable = false)
     private Long tagId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "entry_id")
     @JsonIgnore
     private Entry entry;

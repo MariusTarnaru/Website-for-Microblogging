@@ -1,10 +1,12 @@
 package sda.backend.server.model;
 
-import lombok.*;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,7 +30,14 @@ public class Tag {
     private Long tagEntryId;
 
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinTable(name = "tag_entry",
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "entry_id"))

@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import sda.backend.server.util.AccountMapper;
 import sda.backend.server.dto.DTOAccount;
 import sda.backend.server.model.Account;
 import sda.backend.server.model.Avatar;
 import sda.backend.server.repository.AccountRepository;
 import sda.backend.server.repository.AvatarRepository;
+import sda.backend.server.util.AccountMapper;
 
 import java.time.LocalDateTime;
 
@@ -56,16 +56,16 @@ public class AccountService {
     }
 
     public ResponseEntity<?> saveAccount(DTOAccount account) {
-        if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        if (!emailExist(account.getEmail())) {
+            Account newAccount = DTOAccountToAccount(account);
+            newAccount.setCreatedAccount(LocalDateTime.now());
+            Avatar avatar = new Avatar();
+            avatar.setPath(account.getAvatar().getPath());
+            account.setAvatar(avatar);
+            accountRepository.save(newAccount);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-        Account newAccount = DTOAccountToAccount(account);
-        newAccount.setCreatedAccount(LocalDateTime.now());
-        Avatar avatar = new Avatar();
-        avatar.setPath(account.getAvatar().getPath());
-        account.setAvatar(avatar);
-        accountRepository.save(newAccount);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     public ResponseEntity<?> login(DTOAccount account) {
@@ -92,14 +92,6 @@ public class AccountService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    public boolean usernameExists(String username) {
-        return accountRepository.findByUsername(username).isPresent();
-    }
-
-    public boolean idExists(Long id) {
-        return accountRepository.findById(id).isPresent();
-    }
-
     public ResponseEntity<?> updateUserById(DTOAccount dtoAccount, Long id) {
         if (idExists(id)) {
             Account account = accountRepository.findById(id).get();
@@ -116,6 +108,18 @@ public class AccountService {
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    public boolean idExists(Long id) {
+        return accountRepository.existsById(id);
+    }
+
+    private boolean emailExist(String email) {
+        return accountRepository.existsByEmail(email);
+    }
+
+    public boolean usernameExists(String username) {
+        return accountRepository.existsByUsername(username);
     }
 
 }

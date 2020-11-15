@@ -10,12 +10,13 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    Optional<Account> findByEmail(String email);
-
     List<Account> findAll();
 
     Optional<Account> findByEmailAndPassword(String email, String password);
 
     Optional<Account> findByUsername(String username);
 
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

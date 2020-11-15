@@ -44,22 +44,39 @@ public class Entry {
     @Enumerated(EnumType.STRING)
     private EntryType type;
 
-    @ManyToOne(cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH})
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "account_id")
     @JsonIgnore
     private Account account;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "entries")
+    @ManyToMany(mappedBy = "entries",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "entry",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     private Set<Like> likes;
 
     @OneToMany(mappedBy = "entry",
@@ -67,12 +84,20 @@ public class Entry {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH}
+                    CascadeType.REFRESH
+            }
     )
     @JsonIgnore
     private Set<SharedEntry> sharedEntries;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry")
+    @OneToMany(mappedBy = "entry",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
     private List<TagEntry> tagEntries;
 
 }
