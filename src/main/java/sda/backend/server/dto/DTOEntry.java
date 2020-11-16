@@ -32,14 +32,10 @@ public class DTOEntry {
 
     private Account account;
 
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
     private List<Comment> comments;
 
     private Set<Like> likes;
-
-    private Set<SharedEntry> sharedEntries;
-
-    private List<TagEntry> tagEntries;
 
 }

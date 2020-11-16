@@ -22,7 +22,7 @@ public class Follower {
     @Column(name = "following_id")
     private Long followingId;
 
-    @Column(name = "created_data")
+    @Column(name = "created_data", nullable = false)
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdData;
 

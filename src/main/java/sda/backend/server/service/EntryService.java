@@ -31,8 +31,6 @@ public class EntryService {
                 .tags(entry.getTags())
                 .comments(entry.getComments())
                 .likes(entry.getLikes())
-                .sharedEntries(entry.getSharedEntries())
-                .tagEntries(entry.getTagEntries())
                 .build();
         return dtoEntry;
     }
@@ -50,8 +48,6 @@ public class EntryService {
                 .tags(dtoEntry.getTags())
                 .comments(dtoEntry.getComments())
                 .likes(dtoEntry.getLikes())
-                .sharedEntries(dtoEntry.getSharedEntries())
-                .tagEntries(dtoEntry.getTagEntries())
                 .build();
         return entry;
     }

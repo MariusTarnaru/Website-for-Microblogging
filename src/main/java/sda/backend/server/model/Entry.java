@@ -33,7 +33,7 @@ public class Entry {
     @Column(name = "image_path")
     private String imagePath;
 
-    @Column(name = "created_data")
+    @Column(name = "created_data", nullable = false)
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdDate;
 
@@ -45,25 +45,22 @@ public class Entry {
     @Enumerated(EnumType.STRING)
     private EntryType type;
 
+    ///////////////////////////////////////////////////////////////////////
     @ManyToOne(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     @JoinColumn(name = "account_id")
     @JsonIgnore
     private Account account;
 
-    @ManyToMany(mappedBy = "entries" ,cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            }
+    @ManyToMany(mappedBy = "entries", cascade = {
+            CascadeType.ALL
+    }
+
     )
+
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
@@ -76,23 +73,35 @@ public class Entry {
     )
     private Set<Like> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "entry",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
-    @JsonIgnore
-    private Set<SharedEntry> sharedEntries = new HashSet<>();
+    ///////////////////////////////////////////////////////////////////////
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.getEntries().add(this);
+    }
 
-/*    @OneToMany(mappedBy = "entry",
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
-            }
-    )
-    private List<TagEntry> tagEntries;*/
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
+        tag.getEntries().remove(this);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setEntry(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setEntry(null);
+    }
+
+    public void addLike(Like like) {
+        likes.add(like);
+        like.setEntry(this);
+    }
+
+    public void removeLike(Like like) {
+        likes.remove(like);
+        like.setEntry(null);
+    }
 
 }

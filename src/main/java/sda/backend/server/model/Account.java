@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = {"avatar", "entries", "comments", "followed", "follower", "likes", "sharedEntries"})
+@ToString(exclude = {"avatar", "entries", "comments", "followed", "follower", "likes"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "account")
@@ -39,7 +39,7 @@ public class Account {
     @Column(unique = true, name = "display_name")
     private String displayName;
 
-    @Column(name = "created_data")
+    @Column(name = "created_data", nullable = false)
     @DateTimeFormat(pattern = "yyyy.MM.dd hh:mm:ss")
     private LocalDateTime createdAccount;
 
@@ -51,9 +51,19 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    ///////////////////////////////////////////////////////////////////////
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
+
+    @OneToMany(
+            mappedBy = "account",
+            cascade = {
+                    CascadeType.ALL
+            }
+    )
+    @JsonIgnore
+    private List<Entry> sharedEntries = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "account",
@@ -74,11 +84,7 @@ public class Account {
 
     @OneToMany(mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
@@ -100,20 +106,66 @@ public class Account {
     @JsonIgnore
     Set<Like> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
-    @JsonIgnore
-    Set<SharedEntry> sharedEntries = new HashSet<>();
-
-    public void addEntry(Entry newEntry) {
-        if (entries == null) {
-            entries = new ArrayList<>();
-        }
-        entries.add(newEntry);
-        newEntry.setAccount(this);
+    /////////////////////////////////////////////////////////////////////////////////
+    public void addEntry(Entry entry) {
+        entries.add(entry);
+        entry.setAccount(this);
     }
+
+    public void removeEntry(Entry entry) {
+        entries.remove(entry);
+        entry.setAccount(null);
+    }
+
+    public void addSharedEntry(Entry entry) {
+        sharedEntries.add(entry);
+        entry.setAccount(this);
+    }
+
+    public void removeSharedEntry(SharedEntry entry) {
+        entries.remove(entry);
+        entry.setAccount(null);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setAccount(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setAccount(null);
+    }
+
+    public void addFollowed(Followed follow) {
+        followed.add(follow);
+        follow.setAccount(this);
+    }
+
+    public void removeFollowed(Followed follow) {
+        followed.remove(follow);
+        follow.setAccount(null);
+    }
+
+    public void addFollower(Follower follow) {
+        follower.add(follow);
+        follow.setAccount(this);
+    }
+
+    public void removeFollower(Follower follow) {
+        follower.remove(follow);
+        follow.setAccount(null);
+    }
+
+    public void addLike(Like like){
+        likes.add(like);
+        like.setAccount(this);
+    }
+
+    public void removeLike(Like like){
+        likes.remove(like);
+        like.setAccount(null);
+    }
+
 
 }

@@ -25,9 +25,6 @@ public class Tag {
     @Column
     private String link;
 
-    @Column(name = "tag_entry_id")
-    private Long tagEntryId;
-
     @ManyToMany(
             cascade = {
                     CascadeType.DETACH,

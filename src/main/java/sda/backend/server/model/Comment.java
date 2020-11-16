@@ -25,7 +25,7 @@ public class Comment {
     @Column
     private String content;
 
-    @Column(name = "created_data")
+    @Column(name = "created_data", nullable = false)
     @DateTimeFormat(pattern = "dd.MM.yyyy hh:mm")
     private LocalDateTime createdDate;
 
@@ -51,5 +51,9 @@ public class Comment {
     @JoinColumn(name = "account_id", nullable = false)
     @JsonIgnore
     private Account account;
+
+
+
+
 
 }

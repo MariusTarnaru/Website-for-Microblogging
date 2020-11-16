@@ -24,10 +24,7 @@ public class SharedEntry {
 
     @ManyToOne(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     @JoinColumn(name = "entry_id")
@@ -35,10 +32,7 @@ public class SharedEntry {
 
     @ManyToOne(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     @JoinColumn(name = "account_id")
