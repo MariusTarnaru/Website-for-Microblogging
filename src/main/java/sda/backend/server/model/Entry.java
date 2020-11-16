@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,8 +19,8 @@ import java.util.Set;
 @Table(name = "entry")
 public class Entry {
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     @Column(name = "entry_id")
     private Long entryId;
 
@@ -56,48 +57,42 @@ public class Entry {
     @JsonIgnore
     private Account account;
 
-    @ManyToMany(mappedBy = "entries",
-            cascade = {
+    @ManyToMany(mappedBy = "entries" ,cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
                     CascadeType.REFRESH
             }
     )
-    private List<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "entry",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
-    private Set<Like> likes;
+    private Set<Like> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "entry",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    private Set<SharedEntry> sharedEntries;
+    private Set<SharedEntry> sharedEntries = new HashSet<>();
 
-    @OneToMany(mappedBy = "entry",
+/*    @OneToMany(mappedBy = "entry",
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
             }
     )
-    private List<TagEntry> tagEntries;
+    private List<TagEntry> tagEntries;*/
 
 }

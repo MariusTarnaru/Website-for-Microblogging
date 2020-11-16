@@ -11,11 +11,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tag_entry")
 public class TagEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     @Column(name = "tag_entry_id", nullable = false, unique = true)
     private Long tagEntryId;
 
@@ -27,10 +29,11 @@ public class TagEntry {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
             }
     )
     @JoinColumn(name = "entry_id")
     @JsonIgnore
-    private Entry entry;
+    private Entry entryId;
 }

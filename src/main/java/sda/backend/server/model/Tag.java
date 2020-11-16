@@ -1,9 +1,6 @@
 package sda.backend.server.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,10 +10,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tag")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     @Column(name = "tag_id", unique = true, nullable = false)
     private Long tagId;
 
@@ -29,13 +28,12 @@ public class Tag {
     @Column(name = "tag_entry_id")
     private Long tagEntryId;
 
-
     @ManyToMany(
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.REFRESH,
             }
     )
     @JoinTable(name = "tag_entry",

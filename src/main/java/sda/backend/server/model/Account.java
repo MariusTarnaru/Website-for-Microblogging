@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -57,26 +58,19 @@ public class Account {
     @OneToMany(
             mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    private List<Entry> entries;
+    private List<Entry> entries = new ArrayList<>();
 
     @OneToMany(mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "account",
             cascade = {
@@ -88,43 +82,31 @@ public class Account {
             }
     )
     @JsonIgnore
-    private List<Followed> followed;
+    private List<Followed> followed = new ArrayList<>();
 
     @OneToMany(mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    private List<Follower> follower;
+    private List<Follower> follower = new ArrayList<>();
 
     @OneToMany(mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    Set<Like> likes;
+    Set<Like> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "account",
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JsonIgnore
-    Set<SharedEntry> sharedEntries;
+    Set<SharedEntry> sharedEntries = new HashSet<>();
 
     public void addEntry(Entry newEntry) {
         if (entries == null) {
