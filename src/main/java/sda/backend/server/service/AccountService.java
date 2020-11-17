@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOAccount;
+import sda.backend.server.exception.Message;
 import sda.backend.server.model.Account;
 import sda.backend.server.model.Avatar;
 import sda.backend.server.repository.AccountRepository;
@@ -56,27 +57,36 @@ public class AccountService {
     }
 
     public ResponseEntity<?> saveAccount(DTOAccount account) {
-        if (!emailExist(account.getEmail())) {
-            Account newAccount = DTOAccountToAccount(account);
-            newAccount.setCreatedAccount(LocalDateTime.now());
-            Avatar avatar = new Avatar();
-            avatar.setPath(account.getAvatar().getPath());
-            account.setAvatar(avatar);
-            accountRepository.save(newAccount);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        if (emailExist(account.getEmail())) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new Message("Email already exists!"));
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        if(usernameExists(account.getUsername())){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new Message("Username already exists!"));
+        }
+        Account newAccount = DTOAccountToAccount(account);
+        newAccount.setCreatedAccount(LocalDateTime.now());
+        Avatar avatar = new Avatar();
+        avatar.setPath(account.getAvatar().getPath());
+        account.setAvatar(avatar);
+        accountRepository.save(newAccount);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new Message("Account saved successfully!"));
     }
 
     public ResponseEntity<?> login(DTOAccount account) {
-        if(!emailExist(account.getEmail())){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (!emailExist(account.getEmail())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new Message("Email not found!"));
         }
         boolean isAccountValid = accountRepository.findByEmailAndPassword(account.getEmail(), account.getPassword()).isPresent();
         if (!isAccountValid) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new Message("Wrong email or password!"));
         }
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.accepted()
+                .body(new Message("You have login successfully!"));
     }
 
     public ResponseEntity<?> getAccountById(Long id) {
@@ -84,7 +94,8 @@ public class AccountService {
             DTOAccount account = accountToDTOAccount(accountRepository.findById(id).get());
             return new ResponseEntity<>(account, HttpStatus.ACCEPTED);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new Message("Account not found"));
     }
 
     public ResponseEntity<?> getAccountByUsername(String username) {
@@ -92,7 +103,8 @@ public class AccountService {
             DTOAccount account = accountToDTOAccount(accountRepository.findByUsername(username).get());
             return new ResponseEntity<>(account, HttpStatus.ACCEPTED);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new Message("Username not found"));
     }
 
     public ResponseEntity<?> updateUserById(DTOAccount dtoAccount, Long id) {
@@ -102,7 +114,8 @@ public class AccountService {
             accountRepository.save(account);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new Message("Account not found"));
     }
 
     public ResponseEntity<?> deleteUserById(Long id) {
@@ -110,7 +123,8 @@ public class AccountService {
             accountRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new Message("Account not found"));
     }
 
     public boolean idExists(Long id) {
