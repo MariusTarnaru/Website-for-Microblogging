@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "shared_entry")
 public class SharedEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "shared_entry_id")
     private Long sharedEntryId;
@@ -37,6 +37,5 @@ public class SharedEntry {
     )
     @JoinColumn(name = "account_id")
     private Account account;
-
 
 }

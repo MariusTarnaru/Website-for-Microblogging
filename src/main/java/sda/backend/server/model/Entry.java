@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Table(name = "entry")
 public class Entry {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "entry_id")
     private Long entryId;
@@ -55,16 +56,19 @@ public class Entry {
     @JsonIgnore
     private Account account;
 
-    @ManyToMany(mappedBy = "entries", cascade = {
-            CascadeType.ALL
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
     }
-
     )
-
+    @JoinTable(name = "tag_entry",
+    joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "entry_id")
+    )
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "entry",
             cascade = {
@@ -72,6 +76,9 @@ public class Entry {
             }
     )
     private Set<Like> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
+    private List<SharedEntry> sharedEntries = new ArrayList<>();
 
     ///////////////////////////////////////////////////////////////////////
     public void addTag(Tag tag) {
@@ -97,11 +104,25 @@ public class Entry {
     public void addLike(Like like) {
         likes.add(like);
         like.setEntry(this);
+        like.setCount(like.getCount() + 1);
+
     }
 
     public void removeLike(Like like) {
         likes.remove(like);
         like.setEntry(null);
+        like.setCount(like.getCount() - 1);
+
+    }
+
+    public void addSharedEntry(SharedEntry entry) {
+        sharedEntries.add(entry);
+        entry.setEntry(this);
+    }
+
+    public void removeSharedEntry(SharedEntry entry) {
+        sharedEntries.remove(entry);
+        entry.setEntry(null);
     }
 
 }

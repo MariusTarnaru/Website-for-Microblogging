@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 public class Like {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(name = "like_id", unique = true)
+    @Column(name = "like_id")
     private Long likeId;
 
     @Column

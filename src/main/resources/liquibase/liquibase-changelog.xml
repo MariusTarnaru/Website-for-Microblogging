@@ -14,7 +14,6 @@
     <include file="\liquibase\like.sql"/>
     <include file="\liquibase\tag.sql"/>
     <include file="\liquibase\tag_entry.sql"/>
-    <include file="\liquibase\update_tag_constrains_for_tag_entry_id.sql"/>
     <include file="\liquibase\update_tag_entry_contranins.sql"/>
     <include file="\liquibase\insert_into_avatar.sql"/>
     <include file="\liquibase\insert_into_account.sql"/>
@@ -24,7 +23,6 @@
     <include file="\liquibase\insert_into_like.sql"/>
     <include file="\liquibase\insert_into_tag.sql"/>
     <include file="\liquibase\insert_into_tag_entry.sql"/>
-    <include file="\liquibase\update_tag_add_tag_entry_id.sql"/>
     <include file="\liquibase\insert_into_followed.sql"/>
     <include file="\liquibase\insert_into_follower.sql"/>
 

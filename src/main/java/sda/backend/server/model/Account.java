@@ -22,7 +22,7 @@ import java.util.Set;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "account_id")
     private Long accountId;
@@ -160,11 +160,14 @@ public class Account {
     public void addLike(Like like){
         likes.add(like);
         like.setAccount(this);
+        like.setCount(like.getCount()+1);
     }
 
     public void removeLike(Like like){
         likes.remove(like);
         like.setAccount(null);
+        like.setCount(like.getCount()-1);
+
     }
 
 

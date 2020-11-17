@@ -69,11 +69,14 @@ public class AccountService {
     }
 
     public ResponseEntity<?> login(DTOAccount account) {
+        if(!emailExist(account.getEmail())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         boolean isAccountValid = accountRepository.findByEmailAndPassword(account.getEmail(), account.getPassword()).isPresent();
         if (!isAccountValid) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
     public ResponseEntity<?> getAccountById(Long id) {

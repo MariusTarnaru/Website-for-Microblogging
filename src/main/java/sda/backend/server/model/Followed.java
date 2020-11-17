@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Followed {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "following_id")
     private Long followingId;

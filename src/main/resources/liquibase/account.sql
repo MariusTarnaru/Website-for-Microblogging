@@ -1,6 +1,6 @@
 create table if not exists account
 (
-    account_id     bigint unsigned unique not null auto_increment,
+    account_id     bigint unsigned unique not null auto_increment ,
     login_email    varchar(255)           not null,
     password       varchar(255)           not null,
     account_name   varchar(20) unique     not null,

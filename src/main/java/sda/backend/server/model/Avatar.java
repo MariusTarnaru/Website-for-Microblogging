@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Avatar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true, name = "avatar_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "avatar_id")
     @EqualsAndHashCode.Include
     private Long avatarId;
     @Column

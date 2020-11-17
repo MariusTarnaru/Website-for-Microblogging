@@ -14,9 +14,9 @@ import java.util.List;
 @Table(name = "tag")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(name = "tag_id", unique = true, nullable = false)
+    @Column(name = "tag_id")
     private Long tagId;
 
     @Column(length = 50)
@@ -25,17 +25,8 @@ public class Tag {
     @Column
     private String link;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-            }
-    )
-    @JoinTable(name = "tag_entry",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "entry_id"))
+    @ManyToMany( mappedBy = "tags")
+
     private List<Entry> entries;
 
 }
