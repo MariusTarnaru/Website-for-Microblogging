@@ -58,12 +58,12 @@ public class AccountService {
 
     public ResponseEntity<?> saveAccount(DTOAccount account) {
         if (emailExist(account.getEmail())) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new Message("Email already exists!"));
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new Message("Email already exists!"));
         }
-        if(usernameExists(account.getUsername())){
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new Message("Username already exists!"));
+        if (usernameExists(account.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new Message("Username already exists!"));
         }
         Account newAccount = DTOAccountToAccount(account);
         newAccount.setCreatedAccount(LocalDateTime.now());

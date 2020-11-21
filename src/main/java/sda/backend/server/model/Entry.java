@@ -1,6 +1,7 @@
 package sda.backend.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "entry")
+@JsonIgnoreType
 public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

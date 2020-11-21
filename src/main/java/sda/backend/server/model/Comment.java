@@ -38,6 +38,7 @@ public class Comment {
             }
     )
     @JoinColumn(name = "entry_id", nullable = false)
+    @JsonIgnore
     private Entry entry;
 
     @ManyToOne(

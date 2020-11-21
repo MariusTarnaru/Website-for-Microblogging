@@ -1,6 +1,7 @@
 package sda.backend.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "account")
+@JsonIgnoreType
 public class Account {
 
     @Id
@@ -51,62 +53,37 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    ///////////////////////////////////////////////////////////////////////
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id", referencedColumnName = "avatar_Id")
     private Avatar avatar;
 
-    @OneToMany(
-            mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.ALL})
     @JsonIgnore
     private List<Entry> sharedEntries = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.ALL})
     @JsonIgnore
     private List<Entry> entries = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "follow",
+            joinColumns = @JoinColumn(name = "followed_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_id"))
     @JsonIgnore
-    private List<Followed> followed = new ArrayList<>();
+    private Set<Account> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "followers")
     @JsonIgnore
-    private List<Follower> follower = new ArrayList<>();
+    private Set<Account> following = new HashSet<>();
 
-    @OneToMany(mappedBy = "account",
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     Set<Like> likes = new HashSet<>();
 
-    /////////////////////////////////////////////////////////////////////////////////
     public void addEntry(Entry entry) {
         entries.add(entry);
         entry.setAccount(this);
@@ -137,36 +114,34 @@ public class Account {
         comment.setAccount(null);
     }
 
-    public void addFollowed(Followed follow) {
-        followed.add(follow);
-        follow.setAccount(this);
+    public void addFollower(Account follower) {
+        followers.add(follower);
+        follower.following.add(this);
     }
 
-    public void removeFollowed(Followed follow) {
-        followed.remove(follow);
-        follow.setAccount(null);
+    public void removeFollower(Account follower) {
+        followers.remove(follower);
+        follower.following.remove(this);
     }
 
-    public void addFollower(Follower follow) {
-        follower.add(follow);
-        follow.setAccount(this);
+    public void addFollowing(Account followed) {
+        followed.addFollower(this);
     }
 
-    public void removeFollower(Follower follow) {
-        follower.remove(follow);
-        follow.setAccount(null);
+    public void removeFollowing(Account followed) {
+        followed.removeFollower(this);
     }
 
-    public void addLike(Like like){
+    public void addLike(Like like) {
         likes.add(like);
         like.setAccount(this);
-        like.setCount(like.getCount()+1);
+        like.setCount(like.getCount() + 1);
     }
 
-    public void removeLike(Like like){
+    public void removeLike(Like like) {
         likes.remove(like);
         like.setAccount(null);
-        like.setCount(like.getCount()-1);
+        like.setCount(like.getCount() - 1);
 
     }
 

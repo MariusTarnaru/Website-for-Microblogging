@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import sda.backend.server.model.Entry;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository

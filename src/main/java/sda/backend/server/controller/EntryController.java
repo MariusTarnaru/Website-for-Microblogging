@@ -1,7 +1,6 @@
 package sda.backend.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -22,14 +21,19 @@ public class EntryController {
         this.entryService = entryService;
     }
 
-    @PostMapping("/addEntry")
+    @PostMapping("/entries")
     public ResponseEntity addEntry(@RequestBody DTOEntry entry) {
-        DTOEntry dtoEntry = entryService.saveEntry(entry);
-        return new ResponseEntity<>(dtoEntry, HttpStatus.CREATED);
+        return entryService.saveEntry(entry);
     }
 
-    @GetMapping("/entrys/{id}")
+    @GetMapping("/entries/{id}")
     public ResponseEntity getEntryById(Long id) {
         return entryService.getEntryById(id);
     }
+
+    @GetMapping("/{username}/entries")
+    public ResponseEntity getPostsByUsername(@PathVariable String username){
+        return entryService.getEntriesByUsername(username);
+    }
+
 }

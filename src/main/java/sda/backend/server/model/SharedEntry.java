@@ -22,20 +22,14 @@ public class SharedEntry {
     @Column(name = "quote")
     private String quote;
 
-    @ManyToOne(
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "entry_id")
+    @JsonIgnore
     private Entry entry;
 
-    @ManyToOne(
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
 
 }

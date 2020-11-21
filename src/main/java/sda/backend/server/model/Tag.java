@@ -1,5 +1,7 @@
 package sda.backend.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tag")
+@JsonIgnoreType
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +28,8 @@ public class Tag {
     @Column
     private String link;
 
-    @ManyToMany( mappedBy = "tags")
-
+    @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private List<Entry> entries;
 
 }

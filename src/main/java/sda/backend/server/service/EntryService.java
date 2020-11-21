@@ -4,18 +4,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sda.backend.server.dto.DTOEntry;
+import sda.backend.server.exception.Message;
+import sda.backend.server.model.Account;
 import sda.backend.server.model.Entry;
+import sda.backend.server.repository.AccountRepository;
 import sda.backend.server.repository.EntryRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EntryService {
 
     public final EntryRepository entryRepository;
+    public final AccountRepository accountRepository;
 
-    public EntryService(EntryRepository entryRepository) {
+    public EntryService(EntryRepository entryRepository, AccountRepository accountRepository) {
         this.entryRepository = entryRepository;
+        this.accountRepository = accountRepository;
     }
 
     private DTOEntry entryToDTOEntry(Entry entry) {
@@ -52,11 +59,12 @@ public class EntryService {
         return entry;
     }
 
-    public DTOEntry saveEntry(DTOEntry entry) {
+    public ResponseEntity saveEntry(DTOEntry entry) {
         Entry newEntry = DTOEntryToEntry(entry);
         newEntry.setCreatedDate(LocalDateTime.now());
         entryRepository.save(newEntry);
-        return entryToDTOEntry(entryRepository.findByContent(entry.getContent()).get());
+        DTOEntry savedEntry = entryToDTOEntry(entryRepository.findByContent(entry.getContent()).get());
+        return new ResponseEntity<>(savedEntry, HttpStatus.CREATED);
     }
 
     public ResponseEntity getEntryById(Long id) {
@@ -69,5 +77,20 @@ public class EntryService {
 
     private boolean idExists(Long id) {
         return entryRepository.existsById(id);
+    }
+
+    public ResponseEntity getEntriesByUsername(String username) {
+        if (accountRepository.existsByUsername(username)) {
+            Account account = accountRepository.findByUsername(username).get();
+            List<Long> followedList = new ArrayList<>();
+            List<Entry> entryList =  new ArrayList<>();
+            List<DTOEntry> dtoEntryList = new ArrayList<>();
+            followedList.add(account.getAccountId());
+            account.getFollowers().stream().forEach(follower -> followedList.add(follower.getAccountId()));
+            followedList.stream().forEach(id -> entryList.addAll(accountRepository.findById(id).get().getEntries()));
+            entryList.stream().forEach(entry -> dtoEntryList.add(entryToDTOEntry(entry)));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(dtoEntryList);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message("The username not exist!"));
     }
 }
