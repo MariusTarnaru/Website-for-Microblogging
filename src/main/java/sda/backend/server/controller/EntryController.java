@@ -35,5 +35,4 @@ public class EntryController {
     public ResponseEntity getPostsByUsername(@PathVariable String username){
         return entryService.getEntriesByUsername(username);
     }
-
 }
